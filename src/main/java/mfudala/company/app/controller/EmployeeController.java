@@ -5,11 +5,10 @@ import mfudala.company.app.dao.ActiveEmployee;
 import mfudala.company.app.dao.Employee;
 import mfudala.company.app.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,22 +21,26 @@ public class EmployeeController {
         employeeService = service;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/addEmployee")
     public void addEmployee(@ModelAttribute("employee") Employee employee) {
         employeeService.addEmployee(employee);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/addActiveEmployee")
     public void addActiveEmployee(@ModelAttribute("activeEmployee") ActiveEmployee activeEmployee) {
         employeeService.addActiveEmployee(activeEmployee);
     }
 
     @GetMapping("/employees")
-    public List<? extends Employee> getEmployees(@RequestParam boolean includeOnlyActive) {
+    public ResponseEntity<? extends Employee> getEmployees(@RequestParam(required = false) boolean includeOnlyActive) {
+        ResponseEntity responseEntity;
+        ResponseBody responseBody;
         if (includeOnlyActive) {
-            return employeeService.getAllActiveEmployees();
+            responseBody = employeeService.getAllActiveEmployees().to;
         } else {
             return employeeService.getAllEmployees();
         }
+
+        return ResponseEntity.status(HttpStatus.OK).body(em);
     }
 }
