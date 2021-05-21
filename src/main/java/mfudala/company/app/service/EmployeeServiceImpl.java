@@ -1,20 +1,17 @@
 package mfudala.company.app.service;
 
-import mfudala.company.app.dao.ActiveEmployee;
-import mfudala.company.app.dao.Employee;
+import mfudala.company.app.model.ActiveEmployee;
+import mfudala.company.app.model.Employee;
 import mfudala.company.app.repository.ActiveEmployeeRepository;
 import mfudala.company.app.repository.EmployeeRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceImpl.class);
+
     private final EmployeeRepository employeeRepository;
     private final ActiveEmployeeRepository activeEmployeeRepository;
 
@@ -25,24 +22,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee addEmployee(Employee employee){
+    public Employee addEmployee(Employee employee) {
         employeeRepository.save(employee);
         return employee;
     }
 
     @Override
-    public ActiveEmployee addActiveEmployee(ActiveEmployee activeEmployee){
+    public ActiveEmployee addActiveEmployee(ActiveEmployee activeEmployee) {
         employeeRepository.save(activeEmployee);
         return activeEmployee;
     }
 
     @Override
-    public List<Employee> getAllEmployees(){
+    public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
 
     @Override
-    public List<ActiveEmployee> getAllActiveEmployees(){
+    public List<ActiveEmployee> getAllActiveEmployees() {
         return activeEmployeeRepository.findAll();
     }
 
@@ -65,5 +62,4 @@ public class EmployeeServiceImpl implements EmployeeService {
     public ActiveEmployee updateActiveEmployee(ActiveEmployee activeEmployee) {
         return activeEmployeeRepository.save(activeEmployee);
     }
-
 }

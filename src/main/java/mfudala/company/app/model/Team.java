@@ -1,5 +1,6 @@
-package mfudala.company.app.dao;
+package mfudala.company.app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class Team implements Serializable {
     @Column(length = 50, nullable = false)
     private String name;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "teams", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Employee> employees;
 }

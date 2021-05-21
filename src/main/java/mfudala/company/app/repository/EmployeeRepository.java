@@ -1,6 +1,6 @@
 package mfudala.company.app.repository;
 
-import mfudala.company.app.dao.Employee;
+import mfudala.company.app.model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

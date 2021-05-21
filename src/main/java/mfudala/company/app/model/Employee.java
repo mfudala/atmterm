@@ -1,6 +1,5 @@
-package mfudala.company.app.dao;
+package mfudala.company.app.model;
 
-import com.sun.istack.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "Employee")
 public class Employee implements Serializable {
 
     @Id
@@ -26,7 +26,7 @@ public class Employee implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "employee_team",
-               joinColumns =  @JoinColumn(name = "employee_id", referencedColumnName = "id"),
-               inverseJoinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id"))
+               joinColumns = @JoinColumn(name = "employee_id"),
+               inverseJoinColumns = @JoinColumn(name = "team_id"))
     private List<Team> teams;
 }

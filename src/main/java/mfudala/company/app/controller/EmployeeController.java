@@ -1,7 +1,7 @@
 package mfudala.company.app.controller;
 
-import mfudala.company.app.dao.ActiveEmployee;
-import mfudala.company.app.dao.Employee;
+import mfudala.company.app.model.ActiveEmployee;
+import mfudala.company.app.model.Employee;
 import mfudala.company.app.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -75,19 +75,19 @@ public class EmployeeController {
 
     @PutMapping("/employee")
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) {
-        employeeService.updateEmployee(employee);
+        Employee updatedEmp = employeeService.updateEmployee(employee);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(employee);
+                .body(updatedEmp);
     }
 
     @PutMapping("/employee/active")
     public ResponseEntity<Employee> updateActiveEmployee(@RequestBody ActiveEmployee activeEmployee) {
-        employeeService.updateActiveEmployee(activeEmployee);
+        ActiveEmployee updatedEmp = employeeService.updateActiveEmployee(activeEmployee);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(activeEmployee);
+                .body(updatedEmp);
     }
 }

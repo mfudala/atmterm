@@ -1,8 +1,7 @@
 package mfudala.company.app.service;
 
-import mfudala.company.app.dao.ActiveEmployee;
-import mfudala.company.app.dao.Employee;
-import org.springframework.stereotype.Service;
+import mfudala.company.app.model.ActiveEmployee;
+import mfudala.company.app.model.Employee;
 
 import java.util.List;
 
@@ -23,5 +22,4 @@ public interface EmployeeService {
     Employee updateEmployee(Employee employee);
 
     ActiveEmployee updateActiveEmployee(ActiveEmployee activeEmployee);
-
 }
