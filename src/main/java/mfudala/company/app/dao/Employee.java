@@ -1,19 +1,27 @@
 package mfudala.company.app.dao;
 
+import com.sun.istack.Nullable;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Data
-public class Employee {
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Employee implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     private String name;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)

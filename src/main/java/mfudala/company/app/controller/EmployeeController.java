@@ -1,6 +1,5 @@
 package mfudala.company.app.controller;
 
-import com.sun.istack.NotNull;
 import mfudala.company.app.dao.ActiveEmployee;
 import mfudala.company.app.dao.Employee;
 import mfudala.company.app.service.EmployeeService;
@@ -14,33 +13,81 @@ import java.util.List;
 
 @Controller
 public class EmployeeController {
+
     private final EmployeeService employeeService;
 
     @Autowired
     public EmployeeController(EmployeeService service) {
-        employeeService = service;
+        this.employeeService = service;
     }
 
-    @PostMapping("/addEmployee")
-    public void addEmployee(@ModelAttribute("employee") Employee employee) {
-        employeeService.addEmployee(employee);
+    @PostMapping("/employee")
+    public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
+        Employee createdEmployee = employeeService.addEmployee(employee);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createdEmployee);
     }
 
-    @PostMapping("/addActiveEmployee")
-    public void addActiveEmployee(@ModelAttribute("activeEmployee") ActiveEmployee activeEmployee) {
-        employeeService.addActiveEmployee(activeEmployee);
+    @PostMapping("/employee/active")
+    public ResponseEntity<Employee> addActiveEmployee(@RequestBody ActiveEmployee activeEmployee) {
+        ActiveEmployee createdEmployee = employeeService.addActiveEmployee(activeEmployee);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(createdEmployee);
     }
 
     @GetMapping("/employees")
-    public ResponseEntity<? extends Employee> getEmployees(@RequestParam(required = false) boolean includeOnlyActive) {
-        ResponseEntity responseEntity;
-        ResponseBody responseBody;
+    public ResponseEntity<List<? extends Employee>> getEmployees(@RequestParam(required = false) boolean includeOnlyActive) {
+
+        List<? extends Employee> employees;
+
         if (includeOnlyActive) {
-            responseBody = employeeService.getAllActiveEmployees().to;
+            employees = employeeService.getAllActiveEmployees();
         } else {
-            return employeeService.getAllEmployees();
+            employees = employeeService.getAllEmployees();
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(em);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(employees);
+    }
+
+    @DeleteMapping("/employee/{id}")
+    public ResponseEntity<Employee> deleteEmployee(@PathVariable Long id) {
+        employeeService.deleteEmployeeById(id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
+
+    @DeleteMapping("/employee/active/{id}")
+    public ResponseEntity<ActiveEmployee> deleteActiveEmployee(@PathVariable Long id) {
+        employeeService.deleteActiveEmployeeById(id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
+
+    @PutMapping("/employee")
+    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) {
+        employeeService.updateEmployee(employee);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(employee);
+    }
+
+    @PutMapping("/employee/active")
+    public ResponseEntity<Employee> updateActiveEmployee(@RequestBody ActiveEmployee activeEmployee) {
+        employeeService.updateActiveEmployee(activeEmployee);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(activeEmployee);
     }
 }
